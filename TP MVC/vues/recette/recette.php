@@ -1,28 +1,34 @@
 <?php
-var_dump($recette);
+//var_dump($recette);
 var_dump($ingredients);
-
-echo('<div id="global">
-    <article>
+foreach($recettes as $recette){
+?>
+    <div id="global">
+        <article>
+            <header>
+                <img class="imgRecette" src="img/'.$recette['photo'].'" alt="Tartiflette" />
+                <h1 class="titreRecette">
+                    <?=$recette['titre']?>
+                </h1>
+                <time>
+                    <?=substr($recette['dateCreation'],0,11)?>
+                </time>
+            </header>
+            <p>
+                <?=$recette['description']?>
+            </p>
+        </article>
+        <hr />
         <header>
-            <img class="imgRecette" src="img/'.$recette['photo'].'" alt="Tartiflette" />
-            <h1 class="titreRecette">
-                '.$recette['titre'].'
-            </h1>
-            <time>
-                '.substr($recette['dateCreation'],0,11).'
-            </time>
-        </header>
-        <p>
-            '.$recette['description'].'
-        </p>
-    </article>
-    <hr />
-    <header>
-        <h2 id="titreIngredient">
-            Ingrédients
-        </h2>
-        <ul>');
+            <h2 id="titreIngredient">
+                Ingrédients
+            </h2>
+            <ul>
+<?php
+}
+?>
+
+<?php
 foreach($ingredients as $element){
     echo '<li>'.$element['quantite'].' '.$element['unit'].' '.$element['nom'].'</li>';
 }
