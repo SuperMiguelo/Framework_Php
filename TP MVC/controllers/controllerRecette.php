@@ -14,12 +14,14 @@ class ControllerRecette extends Controller
         $this->recette = new Recette();
         $this->commentaire = new Commentaire();
     }
+
     public function index()
     {
         $recette = $this->recette->getRecette(1);
         $this->genererVue(array('recette' => $recette));
         // Affiche les détails sur une recette
     }
+
     public function recette()
     {
         $id= $_GET['id'];
@@ -28,11 +30,18 @@ class ControllerRecette extends Controller
         $this->genererVue(array('recette' => $recette,'ingredients' => $ingredients));
 
     }
+
     // Ajoute un commentaire à une recette
-    public function commenter()
+    public function ajouterCommentaire($idRecette, $auteur, $contenu, $note, $dateCreation)
     {
-        // récupérer les paramètres (idRecette, auteur, contenu, note)
-        // Sauvegarde du commentaire
-        // Actualisation de l'affichage de la recette
+        $requete = "INSERT INTO commentaire(idRecette, auteur, contenu, note, dateCreation) VALUES(:idRecette, :auteur, :contenu, :note, :dateCreation)";
+        $this->executerRequete($requete,
+            ["idRecette" => $idRecette,
+                "auteur" => $auteur,
+                "contenu" => $contenu,
+                "note" => $note,
+                "dateCreation" => $dateCreation,
+            ]);
+        header("refresh: 0; url = index.php?controller=recette&action=recette&id=$idRecette");
     }
 }
